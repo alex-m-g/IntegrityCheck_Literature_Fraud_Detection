@@ -18,7 +18,7 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.12.3'
-    
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -28,15 +28,22 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y unzip xvfb libxi6 libgconf-2-4 wget
-        wget -N https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
+        sudo apt-get install -y chromium-browser
+
+        # Find the installed Chrome version
+        CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
+        
+        # Get the matching ChromeDriver version for the installed Chrome
+        DRIVER_VERSION=$(wget -qO- "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+
+        # Download and install the matching ChromeDriver
+        wget -N https://chromedriver.storage.googleapis.com/$DRIVER_VERSION/chromedriver_linux64.zip
         unzip chromedriver_linux64.zip -d /usr/local/bin/
         rm chromedriver_linux64.zip
-        sudo apt-get install -y chromium-browser
-        if [ ! -L /usr/bin/google-chrome ]; then sudo ln -s /usr/bin/chromium-browser /usr/bin/google-chrome; fi  # Check for existing link
 
     - name: Run PubMed Scraper
       run: |
-        xvfb-run --auto-servernum -- python pmid_webscraper.py
+        xvfb-run --auto-servernum -- python pmid_webscraper.py  # Ensure this matches the name of your script
 
     - name: Upload CSV file
       uses: actions/upload-artifact@v3
