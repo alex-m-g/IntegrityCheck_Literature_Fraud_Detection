@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -17,8 +18,14 @@ websites = [
     'https://pubmed.ncbi.nlm.nih.gov/?term=%22retracted+article%22+OR+%22retraction%22&filter=dates.2000%2F10%2F10-2002%2F10%2F10'   # 2000-2002
 ]
 
+# Set Chrome options for headless mode
+chrome_options = Options()
+chrome_options.add_argument("--headless")  # Run Chrome in headless mode
+chrome_options.add_argument("--no-sandbox")  # Required in some environments
+chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
+
 # Create a Service object using WebDriver Manager
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
 wait = WebDriverWait(driver, 10)
 
