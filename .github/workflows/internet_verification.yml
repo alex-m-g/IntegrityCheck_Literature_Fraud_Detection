@@ -1,3 +1,31 @@
-- name: Check Internet Connectivity
-  run: |
-    curl -I https://www.ncbi.nlm.nih.gov/pubmed
+name: Run PubMed Scraper
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install selenium webdriver-manager
+
+      - name: Check Internet Connectivity
+        run: |
+          curl -I https://www.ncbi.nlm.nih.gov/pubmed
+
+      - name: Run PubMed scraper
+        run: |
+          xvfb-run --auto-servernum -- python pmid_webscraper.py
