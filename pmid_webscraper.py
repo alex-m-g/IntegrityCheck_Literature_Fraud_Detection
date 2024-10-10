@@ -25,10 +25,12 @@ websites = [
 ]
 
 
-wait = WebDriverWait(driver, 10)
+wait = WebDriverWait(driver, 20)
 
 def num_pages():
     # Get the number of pages
+    wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'of-total-pages')))
+    print(driver.page_source)
     number_of_pages = driver.find_element(By.CLASS_NAME, 'of-total-pages')
     return int((number_of_pages.text).replace('of', '').strip())
 
