@@ -1,0 +1,3 @@
+- name: Check Internet Connectivity
+  run: |
+    curl -I https://www.ncbi.nlm.nih.gov/pubmed
