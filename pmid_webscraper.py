@@ -16,10 +16,10 @@ websites = [
 ]
 
 # Write the path to chromedriver
-path = r'/usr/local/bin/chromedriver'
+chrome_driver_path = r'/usr/local/bin/chromedriver'
 
 # Create a Service object with the path to chromedriver
-service = Service(executable_path=path)
+service = Service(chrome_driver_path)
 
 # Define driver variable using the Service object
 driver = webdriver.Chrome(service=service)
