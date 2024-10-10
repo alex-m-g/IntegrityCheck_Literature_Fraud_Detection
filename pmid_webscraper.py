@@ -3,7 +3,16 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import chromedriver_autoinstaller
 import csv
+
+chromedriver_autoinstaller.install()
+options = webdriver.ChromeOptions()
+options.add_argument('--headless')
+
+service = Service()
+driver = webdriver.Chrome(service=service, options=options)
+                     
 
 # Define the websites
 websites = [
@@ -15,14 +24,6 @@ websites = [
     'https://pubmed.ncbi.nlm.nih.gov/?term=%22retracted+article%22+OR+%22retraction%22&filter=dates.2000%2F10%2F10-2002%2F10%2F10'   # 2000-2002
 ]
 
-# Write the path to chromedriver
-chrome_driver_path = r'/usr/local/bin/chromedriver'
-
-# Create a Service object with the path to chromedriver
-service = Service(chrome_driver_path)
-
-# Define driver variable using the Service object
-driver = webdriver.Chrome(service=service)
 
 wait = WebDriverWait(driver, 10)
 
