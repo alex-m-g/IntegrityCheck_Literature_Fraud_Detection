@@ -16,7 +16,7 @@ websites = [
 ]
 
 # Write the path to chromedriver
-path = r'C:\Users\agarc\OneDrive\Documents\chromedriver-win64\chromedriver.exe'
+path = r'/usr/local/bin/chromedriver'
 
 # Create a Service object with the path to chromedriver
 service = Service(executable_path=path)
