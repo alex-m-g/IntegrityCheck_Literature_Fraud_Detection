@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import csv
 
 # Define the websites
 websites = [
@@ -66,6 +67,13 @@ for website in websites:
     # Output the collected PMIDs
 print("Collected PMIDs:", pmid_list_master)
 
+# Saving the collected PMIDs into a CSV file
+with open('./output/pmid_list_master.csv', 'w', newline='') as f:
+    write = csv.writer(f)
+    
+    # Assuming pmid_list_master is a list of integers, each needs to be written as a row
+    for pmid in pmid_list_master:
+        write.writerow([pmid])  # Each PMID is written as a single-item list
 
 # Close the driver
 driver.quit()
